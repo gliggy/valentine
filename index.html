@@ -4,38 +4,48 @@
         <title>Happy Valentine!</title>
         <style>
 * { margin: 0; padding: 0; }
-html {
- height:100%;
-}
 html, body {
-    margin: 0;
+ margin: 0;
  height:100%;
  min-height:100%;
  width: 100%;
  min-width:100%;
 }
 body {
-    background-color: black;
-    background-image: url('flowers.gif');
-	 -webkit-background-size: cover;
-	 -moz-background-size: cover;
-	 -o-background-size: cover;
-	 background-size: cover;
-         background-repeat: no-repeat;
-         background-position: center center;
+  background-color: black;
+  background-image: url('flowers.gif');
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 .audio-box {
-    text-align: center;
-    padding: 3em;
+  text-align: center;
+  padding: 3em;
+}
+
+.audio-box a {
+  cursor: pointer;
+  cursor: hand;
+  animation: pulsate 2s ease-out;
+  animation-iteration-count: infinite; 
+}
+.audio-box {
+}
+@keyframes pulsate {
+    0% {opacity: 0.2;}
+    50% {opacity: 1.0;}
+    100% {opacity: 0.2;}
 }
         </style>
     </head>
 
     <body>
-
-
+        <img src="ch1.gif" width="1" height="1" />
         <div class="audio-box">
-            <div id="one"></div>
+            <div id="player-goes-here"></div>
             <div>
                 <a id="play"><img src="play.png" ></a>
             </div>
@@ -43,7 +53,6 @@ body {
 
         <script>
 var params = {};
-
 if (location.search) {
     var parts = location.search.substring(1).split('&');
 
@@ -54,70 +63,34 @@ if (location.search) {
         params[nv[0]] = nv[1] || true;
     }
 }
-
-// Now you can get the parameters you want like so:
 var person = params.person;
+var play = document.getElementById('play');
 
-console.log(person);
-
-//var audio = new Audio(person + '.mp3');
-//audio.play();
-
-function fn() {
-         //<audio class="my_audio" controls preload="none">
-         //<source src="audio/my_song.mp3" type="audio/mpeg">
-         //<source src="audio/my_song.ogg" type="audio/ogg">
-         //</audio>
-
-var d1 = document.getElementById('one');
-d1.insertAdjacentHTML('afterend', '<audio class="my_audio" controls preload="none"><source class="mp3" src="' + person + '.mp3" type="audio/mpeg"></audio>');
-//document.querySelectorAll(".my_audio")[0].addEventListener('ended', function() {
-//    this.currentTime = 0;
-//    this.play();
-//}, false);
-//audio.addEventListener('ended', function() {
-//         var alt = document.querySelectorAll(".my_audio")[0];
-//         alt.currentTime = 0;
-//         alt.play();
-//}, false);
-
-            //var alt = document.querySelectorAll(".my_audio")[0];
-            //alt.currentTime = 0;
-            //alt.play();
-
+function initialize_audio() {
+  var d1 = document.getElementById('player-goes-here');
+  d1.insertAdjacentHTML('afterend', '<audio class="my_audio" controls preload="auto"><source class="mp3" src="' + person + '.mp3" type="audio/mpeg"><source class="mp3" src="' + person + '.ogg" type="audio/ogg"></audio>');
+  play.addEventListener('click', function() {
+    click_audio();
+    return false;
+  });
 }
 
-
-var play = document.querySelectorAll('#play')[0];
-
-function clicky() {
-            var alt = document.querySelectorAll(".my_audio")[0];
-            alt.currentTime = 0;
-            //document.querySelectorAll(".mp3")[0].src = person + '.mp3';
-            //alt.load();
-            alt.play();
-            //var audio = new Audio(person + '.mp3');
-            //audio.play();
-            play.style.opacity = 0.0;
-            alt.addEventListener('ended', function() {
-              play.style.opacity = 1.0;
-              document.querySelectorAll('body')[0].style.backgroundImage = "url('flowers.gif')";
-              document.querySelectorAll('body')[0].style.backgroundSize = "cover";
-            }, false);
-            document.querySelectorAll('body')[0].style.backgroundImage = "url('ch1.gif')";
-            document.querySelectorAll('body')[0].style.backgroundSize = "contain";
+function click_audio() {
+  var alt = document.querySelectorAll(".my_audio")[0];
+  alt.currentTime = 0;
+  alt.play();
+  play.style.animation = 'none';
+  play.style.opacity = 0.0;
+  alt.addEventListener('ended', function() {
+    window.setTimeout(function() {
+      play.style.opacity = 1.0;
+      document.querySelectorAll('body')[0].style.backgroundImage = "url('flowers.gif')";
+      document.querySelectorAll('body')[0].style.backgroundSize = "cover";
+    }, 5000);
+  }, false);
+  document.querySelectorAll('body')[0].style.backgroundImage = "url('ch1.gif')";
+  document.querySelectorAll('body')[0].style.backgroundSize = "contain";
 }
-
-
-play.addEventListener('click', function() {
-            clicky();
-            var alt = document.querySelectorAll(".my_audio")[0];
-            alt.currentTime = 0;
-            alt.play();
-            return false;
-});
-
-//clicky();
 
 function ready(fn) {
   if (document.readyState != 'loading'){
@@ -127,7 +100,7 @@ function ready(fn) {
   }
 }
 
-ready(fn);
+ready(initialize_audio);
 
 
         </script>
