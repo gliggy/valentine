@@ -46,10 +46,27 @@ body {
         <img src="ch1.gif" width="1" height="1" />
         <div class="audio-box">
             <div>
-                <a href="https://gliggy.github.io/funny_letters/"><img src="play.png" /></a>
+                <a id="linky" href="https://gliggy.github.io/funny_letters/"><img src="play.png" /></a>
             </div>
         </div>
+<script>
 
+var params = {};
+if (location.search) {
+    var parts = location.search.substring(1).split('&');
+
+    for (var i = 0; i < parts.length; i++) {
+        var nv = parts[i].split('=');
+        if (!nv[0]) continue;
+        nv[1] = nv[1].replace(/[^a-z]/i,'');
+        nv[1] = nv[1].toLowerCase();
+        params[nv[0]] = nv[1] || true;
+    }
+}
+var person = params.person;
+document.getElementById("linky").href += "?person=" + person;
+
+</script>
     </body>
 
 </html>
