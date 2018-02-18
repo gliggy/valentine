@@ -1,0 +1,72 @@
+<html>
+
+    <head>
+        <title>Happy Valentine!</title>
+        <style>
+* { margin: 0; padding: 0; }
+html, body {
+ margin: 0;
+ height:100%;
+ min-height:100%;
+ width: 100%;
+ min-width:100%;
+}
+body {
+  background-color: black;
+  background-image: url('flowers.gif');
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+.audio-box {
+  text-align: center;
+  padding: 3em;
+}
+
+.audio-box a {
+  cursor: pointer;
+  cursor: hand;
+  animation: pulsate 2s ease-out;
+  animation-iteration-count: infinite; 
+}
+.audio-box {
+}
+@keyframes pulsate {
+    0% {opacity: 0.2;}
+    50% {opacity: 1.0;}
+    100% {opacity: 0.2;}
+}
+        </style>
+    </head>
+
+    <body>
+        <img src="ch1.gif" width="1" height="1" />
+        <div class="audio-box">
+            <div>
+                <a id="linky" href="https://gliggy.github.io/funny_letters/"><img src="play.png" /></a>
+            </div>
+        </div>
+<script>
+
+var params = {};
+if (location.search) {
+    var parts = location.search.substring(1).split('&');
+
+    for (var i = 0; i < parts.length; i++) {
+        var nv = parts[i].split('=');
+        if (!nv[0]) continue;
+        nv[1] = nv[1].replace(/[^a-z.]/i,'');
+        nv[1] = nv[1].toLowerCase();
+        params[nv[0]] = nv[1] || true;
+    }
+}
+var person = params.person;
+document.getElementById("linky").href += "?person=" + person;
+
+</script>
+    </body>
+
+</html>
